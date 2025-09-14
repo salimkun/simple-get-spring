@@ -1,86 +1,90 @@
-# Spring Boot OOP Project
+# Spring Boot OOP Project - Product Catalog Service
 
-This is a Spring Boot project that demonstrates the use of Object-Oriented Programming (OOP) principles to implement a RESTful API for retrieving data from a database. The project is structured to separate concerns, making it easy to maintain and extend.
+This project demonstrates a Product Catalog Service built with Spring Boot, showcasing various modern technologies and architectural patterns.
+
+## Features
+
+- **Product Management:** RESTful API for creating, reading, updating, and deleting product information.
+- **Data Persistence:** Utilizes MongoDB as the primary data store for product data.
+- **Caching:** Implements a caching strategy using Redis to enhance performance for frequently accessed product data.
+- **Event-Driven Architecture:** Leverages Apache Kafka for publishing product-related events (e.g., product created, updated, deleted), enabling other services to react to changes.
+- **Containerization:** The entire application stack (Spring Boot service, MongoDB, Redis, Kafka, Zookeeper) is containerized using Docker Compose for easy setup and deployment.
+- **Spring IoC (Inversion of Control):** Core of the application, managing dependencies and object lifecycle.
+- **Java Stream API:** Used for efficient data processing within the service layer.
+
+## Technologies Used
+
+- **Spring Boot**
+- **Spring Data MongoDB**
+- **MongoDB**
+- **Redis**
+- **Apache Kafka**
+- **Docker & Docker Compose**
+- **Java 17+**
 
 ## Project Structure
 
 ```
-spring-boot-oop-project
-├── src
-│   ├── main
-│   │   ├── java
-│   │   │   └── com
-│   │   │       └── example
-│   │   │           └── springbootoopproject
-│   │   │               ├── SpringBootOopProjectApplication.java
-│   │   │               ├── controller
-│   │   │               │   └── DataController.java
-│   │   │               ├── service
-│   │   │               │   └── DataService.java
-│   │   │               ├── model
-│   │   │               │   └── DataModel.java
-│   │   │               └── repository
-│   │   │                   └── DataRepository.java
-│   │   └── resources
-│   │       ├── application.properties
-│   │       └── application.yml
-│   └── test
-│       └── java
-│           └── com
-│               └── example
-│                   └── springbootoopproject
-│                       └── SpringBootOopProjectApplicationTests.java
-├── pom.xml
-└── README.md
+springBoot/
+  - spring-boot-oop-project/
+    - pom.xml
+    - README.md
+    - src/
+      - main/
+        - java/
+          - com/
+            - example/
+              - springbootoopproject/
+                - controller/
+                - model/
+                - repository/
+                - service/
+                - SpringBootOopProjectApplication.java
+        - resources/
+          - application.properties
+    - docker-compose.yml (To be created)
 ```
 
-## Setup Instructions
+## Getting Started
 
-1. **Clone the Repository**
-   ```bash
-   git clone <repository-url>
-   cd spring-boot-oop-project
-   ```
+### Prerequisites
 
-2. **Configure Environment Variables**
-   Set up your database connection settings using environment variables. You can define these in your `application.properties` or `application.yml` file.
+- Docker Desktop installed and running.
+- Java 17 or higher.
 
-3. **Build the Project**
-   Use Maven to build the project:
-   ```bash
-   mvn clean install
-   ```
+### Running the Application Locally with Docker Compose
 
-4. **Run the Application**
-   Start the Spring Boot application:
-   ```bash
-   mvn spring-boot:run
-   ```
+1.  **Clone the repository:**
+    ```bash
+    git clone <your-repository-url>
+    cd spring-boot-oop-project
+    ```
+2.  **Build the Spring Boot application:**
+    ```bash
+    ./mvnw clean package -DskipTests
+    ```
+3.  **Start the services using Docker Compose:**
+    ```bash
+    docker-compose up --build
+    ```
+    This will start MongoDB, Redis, Kafka, Zookeeper, and your Spring Boot application.
 
-5. **Access the API**
-   You can access the GET API at the following endpoint:
-   ```
-   http://localhost:8080/api/data
-   ```
+4.  **Access the API:**
+    The Spring Boot application will be available at `http://localhost:8080`.
 
-## Usage
+## API Endpoints (To be implemented)
 
-This project provides a simple API to retrieve data from a database. The data is fetched using the `DataService` class, which interacts with the `DataRepository` to perform database operations. The `DataController` handles incoming requests and returns the appropriate responses.
+- `POST /api/products`: Create a new product.
+- `GET /api/products/{id}`: Get product by ID (with caching).
+- `GET /api/products`: Get all products.
+- `PUT /api/products/{id}`: Update an existing product.
+- `DELETE /api/products/{id}`: Delete a product.
 
-## Dependencies
+## Future Enhancements
 
-This project uses the following dependencies:
-- Spring Boot Starter Web
-- Spring Boot Starter Data JPA
-- Database connector (e.g., H2, MySQL, PostgreSQL)
-
-## Testing
-
-Unit tests are included in the `src/test/java` directory to ensure that the application behaves as expected. You can run the tests using:
-```bash
-mvn test
-```
-
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for more details.
+- Implement ElasticSearch for advanced product searching.
+- Integrate a distributed data grid for more sophisticated caching and data distribution.
+- Implement authentication and authorization for API endpoints.
+- Add comprehensive unit and integration tests.
+- Introduce circuit breakers and retry mechanisms for microservices resilience.
+- Monitoring and logging.
